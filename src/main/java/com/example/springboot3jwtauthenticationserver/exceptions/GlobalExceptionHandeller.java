@@ -23,7 +23,6 @@ public class GlobalExceptionHandeller {
             errors.put(fieldName, errorMessage);
         });
 
-
         errorResponseMap.put("status", HttpStatus.BAD_REQUEST);
         errorResponseMap.put("message", "Validation required.");
         errorResponseMap.put("errors", errors);
