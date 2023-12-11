@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SpringBoot3JwtAuthenticationServerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBoot3JwtAuthenticationServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBoot3JwtAuthenticationServerApplication.class, args);
+    }
 
-	@GetMapping()
-	public String index(){
-		return "Welcome!";
-	}
-
+    @GetMapping()
+    public String index() {
+        return "Welcome!";
+    }
 }
