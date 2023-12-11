@@ -1,6 +1,6 @@
 package com.example.springboot3jwtauthenticationserver.services;
 
-import com.example.springboot3jwtauthenticationserver.dto.UserSignUpRequest;
+import com.example.springboot3jwtauthenticationserver.dto.UserCreateRequest;
 import com.example.springboot3jwtauthenticationserver.dto.UserUpdateRequest;
 import com.example.springboot3jwtauthenticationserver.models.User;
 import com.example.springboot3jwtauthenticationserver.repositories.UserRepository;
@@ -49,7 +49,7 @@ public class UserService {
     /**
      * create new resource
      **/
-    public void createUser(UserSignUpRequest documents) {
+    public void createUser(UserCreateRequest documents) {
         User user = new User();
         user.setName(documents.getName());
         user.setEmail(documents.getEmail());

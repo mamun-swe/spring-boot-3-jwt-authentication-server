@@ -1,7 +1,7 @@
 package com.example.springboot3jwtauthenticationserver.controllers;
 
 
-import com.example.springboot3jwtauthenticationserver.dto.UserSignUpRequest;
+import com.example.springboot3jwtauthenticationserver.dto.UserCreateRequest;
 import com.example.springboot3jwtauthenticationserver.dto.UserUpdateRequest;
 import com.example.springboot3jwtauthenticationserver.exceptions.Response;
 import com.example.springboot3jwtauthenticationserver.models.User;
@@ -45,7 +45,7 @@ public class UserController {
      * Create new resource
      **/
     @PostMapping()
-    ResponseEntity<Object> store(@Valid @RequestBody UserSignUpRequest reqBody) {
+    ResponseEntity<Object> store(@Valid @RequestBody UserCreateRequest reqBody) {
         try {
             Optional<User> availableWithEmail = this.userService.getUserByEmail(reqBody.getEmail());
             if (availableWithEmail.isPresent()) {
