@@ -5,9 +5,10 @@ import com.example.springboot3jwtauthenticationserver.dto.UserUpdateRequest;
 import com.example.springboot3jwtauthenticationserver.models.User;
 import com.example.springboot3jwtauthenticationserver.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +20,14 @@ public class UserService {
     /**
      * display the list of resources
      */
-    public List<User> getUsers() {
-        List<User> users = new ArrayList<User>();
-        this.userRepository.findAll().forEach(item -> users.add(item));
-        return users;
+    public List<User> getUsers(int pageNumber, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+//        Page<User> users = new ArrayList<User>();
+//        this.userRepository.findAll().forEach(item -> users.add(item));
+
+        Page<User> users = this.userRepository.findAll(pageRequest);
+
+        return users.getContent();
     }
 
     /**

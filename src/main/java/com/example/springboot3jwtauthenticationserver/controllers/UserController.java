@@ -32,9 +32,10 @@ public class UserController {
      * Display the list of resources
      **/
     @GetMapping()
-    ResponseEntity<Object> index() {
+    ResponseEntity<Object> index(@RequestParam(defaultValue = "0") Integer page,
+                                 @RequestParam(defaultValue = "10") Integer limit) {
         try {
-            List<User> data = this.userService.getUsers();
+            List<User> data = this.userService.getUsers(page, limit);
             return Response.Success(HttpStatus.OK, "List of users.", data);
         } catch (Exception e) {
             return Response.InternalServerError();
