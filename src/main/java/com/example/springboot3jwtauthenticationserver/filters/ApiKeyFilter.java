@@ -1,29 +1,58 @@
 package com.example.springboot3jwtauthenticationserver.filters;
 
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.PrintWriter;
 
+@Component
 public class ApiKeyFilter extends OncePerRequestFilter {
-    private static final String X_API_KEY = "12345678";
+
+    /**
+     * ENVIRONMENT X_API_KEY
+     **/
+    @Value("${apiKey}")
+    private String apiKey;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String apiKey = request.getHeader("x-api-key");
+        String requestApiKey = request.getHeader("x-api-key");
 
-        if (apiKey != null && apiKey.equals(X_API_KEY)) {
-            filterChain.doFilter(request, response);
+        if (requestApiKey == null || requestApiKey.isBlank() || requestApiKey.isEmpty()) {
+            /** Set content type to JSON **/
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+            /** Create a JSON response **/
+            String message = "{\"message\": \"API Key.\",\"errors\": {\"x-api-key\": \"API Key is required.\"},\"status\": \"UNAUTHORIZED\"}";
+
+            /** Write the JSON response to the output stream **/
+            PrintWriter out = response.getWriter();
+            out.write(message);
+            out.flush();
+        } else if (!requestApiKey.equals(this.apiKey)) {
+            /** Set content type to JSON **/
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+            /** Create a JSON response **/
+            String message = "{\"message\": \"API Key.\",\"errors\": {\"x-api-key\": \"Invalid API Key.\"},\"status\": \"UNAUTHORIZED\"}";
+
+            /** Write the JSON response to the output stream **/
+            PrintWriter out = response.getWriter();
+            out.write(message);
+            out.flush();
         } else {
-            Map<String, String> errors = new HashMap<>();
-            errors.put("x-api-key", "Given API Key isn't valid.");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Invalid API Key");
+            filterChain.doFilter(request, response);
         }
     }
 }
