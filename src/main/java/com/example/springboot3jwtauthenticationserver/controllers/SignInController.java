@@ -4,6 +4,7 @@ import com.example.springboot3jwtauthenticationserver.dto.SigningRequest;
 import com.example.springboot3jwtauthenticationserver.exceptions.Response;
 import com.example.springboot3jwtauthenticationserver.models.User;
 import com.example.springboot3jwtauthenticationserver.services.UserService;
+import com.example.springboot3jwtauthenticationserver.utilities.JwtUtil;
 import com.example.springboot3jwtauthenticationserver.utilities.PasswordUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class SignInController {
 
     @Autowired
     private PasswordUtil passwordUtil;
+//    private JwtUtil jwtUtil;
 
     @PostMapping()
     ResponseEntity<Object> signing(@Valid @RequestBody SigningRequest reqBody) {
@@ -48,8 +50,9 @@ public class SignInController {
             }
 
             /** JWT Access token will generate below **/
+//            String accessToken = jwtUtil.generateToken(availableUser.get().getId(), availableUser.get().getName(), availableUser.get().getEmail());
 
-            return Response.Success(HttpStatus.OK, "Successfully logged into account.", "JWT Access token implementing...");
+            return Response.Success(HttpStatus.OK, "Successfully logged into account.", "Hello");
         } catch (Exception e) {
             return Response.InternalServerError();
         }
