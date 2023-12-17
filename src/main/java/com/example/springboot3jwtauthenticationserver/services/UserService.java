@@ -22,8 +22,10 @@ public class UserService {
      */
     public List<User> getUsers(int pageNumber, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
-//        Page<User> users = new ArrayList<User>();
-//        this.userRepository.findAll().forEach(item -> users.add(item));
+/**
+ *         Page<User> users = new ArrayList<User>();
+ *         this.userRepository.findAll().forEach(item -> users.add(item));
+ **/
 
         Page<User> users = this.userRepository.findAll(pageRequest);
 
